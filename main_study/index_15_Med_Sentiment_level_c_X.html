@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>User Trust in Reviews</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+</head>
+
+<body>
+
+<div class="box demo" id="app">
+
+    <br style="clear:both">
+
+    <div class="meta">
+        <b>Aspects Filter</b><br/><br/>
+        <div id="aspects" style="display: block; column-count: 3">
+        <div v-for="a in aspects_detailed">
+            <div class="aspect-chip" v-bind:style="{ width: 200, borderRadius:0.1, backgroundColor:'#a7a7a7' }" v-on:mouseover="filter(a.name, 'All')" v-on:mouseleave="reset()" >{{ a.name}} ({{a.mentions}})</div>
+            <div v-if="a.mentions_pos > 0" class="aspect-chip positive" v-bind:style="{ width: Math.pow(a.mentions_pos,0.3)*35 + 'px', textAlign: 'center', borderRadius:0.1 }" v-on:mouseover="filter(a.name, 'POS')" v-on:mouseleave="reset()" >{{ a.mentions_pos }}</div>
+            <div v-if="a.mentions_neg > 0" class="aspect-chip negative" v-bind:style="{ width: Math.pow(a.mentions_neg,0.3   )*35 + 'px', textAlign: 'center', borderRadius: 0.1 }" v-on:mouseover="filter(a.name, 'NEG')" v-on:mouseleave="reset()">{{ a.mentions_neg }}</div>
+        </div>
+        </div>
+    </div>
+
+    <!--div class="meta">
+        <b>Aspects </b><br/><br/>
+        <p id="aspects2">
+                <span v-on:mouseover="filter(a.aspect, a.sentiment)" v-on:mouseleave="reset()" class="aspect-chip"
+                      v-for="a in aspects"
+                      v-bind:class="{ positive: a.sentiment==='POS', negative: a.sentiment==='NEG', neutral: a.sentiment==='NEU' }">
+                {{ a.aspect }}
+                </span>
+        </p>
+    </div-->
+    <div class="multicol">
+        <div v-for="r in reviews">
+            <div class="output" style="opacity: 1">
+                <div class="content">
+                    <b>{{ r.title }}</b><br/><br/>
+                    <p id="sentences">
+                <span class="sentence" v-for="s in r.sentences"
+                      v-bind:class="{ positive: s.sentiment_marked==='POS', negative: s.sentiment_marked==='NEG', neutral: s.sentiment_marked==='NEU', nothing: s.sentiment_marked==='NONE' }">
+                    {{ s.text }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script src="./bundle.js"></script>
+<script src="./demo_15_Med_Sentiment_level_c_X.js"></script></body>
+</html>
