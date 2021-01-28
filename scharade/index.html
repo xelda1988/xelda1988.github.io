@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+    <script>
+        // define list of words
+        // onclick next word reset timer and select a new random word
+        var word_list = [
+            'Language Model Finetuning',
+            'Python',
+            'Data Science',
+            'Aspect-based sentiment Analysis',
+            'Brushing teeth',
+            'Building a sandcastle',
+            'Dancing',
+            'Driving a car',
+            'Opening a gift',
+            'Playing baseball',
+            'Shoveling snow',
+            'Swimming',
+            'Skateboarding',
+            'Tying a shoe',
+            'Walking a dog',
+            'Yoga',
+            'Abraham Lincoln',
+            'Albert Einstein',
+            'Amelia Earhart',
+            'Barack Obama',
+            'George Washington',
+            'Isaac Newton',
+            'Neil Armstrong',
+            'Vincent van Gogh'
+        ];
+        var total_time = 300;
+        var remaining_time = total_time;
+
+        function set_new_word() {
+            var word = document.getElementById('word');
+            word.innerHTML = word_list[Math.floor(Math.random() * word_list.length)];
+            remaining_time=total_time;
+
+        }
+
+        function reset_timer() {
+            remaining_time=total_time;
+        }
+
+        window.onload = function(e){
+            document.getElementById("remaining_time").innerHTML = total_time.toString();
+
+            var countdown = setInterval(function() {
+                // Get today's date and time
+                document.getElementById("remaining_time").innerHTML = remaining_time.toString();
+                remaining_time=remaining_time - 1;
+            }, 1000);
+        }
+
+
+
+
+
+
+    </script>
+    <title>Hello, world!</title>
+</head>
+<body>
+
+
+
+
+
+
+    <div class="container">
+        <br><br>
+        <br><br>
+
+
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+                <h1>DeepOpinion Scharade</h1>
+                <br><br>
+                <div class="card" style="width: 30rem;">
+                    <div class="card-body">
+                        <h6 class="card-title">Task: Explain</h6>
+                        <p class="card-text" style="font-size: 20pt" id="word">Click Next Word to START</p>
+                        <a href="#" class="btn btn-primary" onclick="set_new_word();">Next Word</a>
+                        <a href="#" class="btn btn-primary" onclick="reset_timer();">Reset Timer</a>
+                        <button type="button" class="btn btn-info">Remaining Time <span id="remaining_time"></span>sec</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+-->
+</body>
+</html>
