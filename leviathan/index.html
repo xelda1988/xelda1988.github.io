@@ -238,17 +238,17 @@
                             </div>
                           </div>
                         </div>
-                        <label>Parameters presets:</label>
-                        <button id="parametersEquality" type="button" class="btn btn-default">Equality</button>
-                        <button id="parametersElite" type="button" class="btn btn-default">Elite</button>
-                        <button id="parametersHierarchy" type="button" class="btn btn-default">Hierarchy</button>
-                        <button id="parametersDominance" type="button" class="btn btn-default">Dominance</button>
-                        <button id="parametersCrisis" type="button" class="btn btn-default">Crisis</button>
+                        <label id="toggleLabel">Parameters presets:</label>
+                        <button id="parametersEquality" type="button" class="btn btn-default" style="display: none;">Equality</button>
+                        <button id="parametersElite" type="button" class="btn btn-default" style="display: none;">Elite</button>
+                        <button id="parametersHierarchy" type="button" class="btn btn-default" style="display: none;">Hierarchy</button>
+                        <button id="parametersDominance" type="button" class="btn btn-default" style="display: none;">Dominance</button>
+                        <button id="parametersCrisis" type="button" class="btn btn-default" style="display: none;">Crisis</button>
                     </form>
                 </div>
                 <div id="grid" style="display:none"></div>
             </div>
-            <div id="rightcontainer" class="col-md-6">
+            <!--div id="rightcontainer" class="col-md-6">
                 <div id="presentation">
                     <h1>Leviathan model</h1>
                     <p>Leviathan is an opinion dynamics model described in <a href="http://jasss.soc.surrey.ac.uk/16/1/5.html">(Deffuant et al., 2013)</a>.</p>
@@ -266,12 +266,30 @@
                 </div>            
                 <div id="graph" style="display:none"></div>
                 <span id="indivInfo"></span>
-            </div>
+            </div-->
         </div>
         <script type="text/javascript" src="js/grid.js"></script>
         <script type="text/javascript" src="js/graph.js"></script>
         <script type="text/javascript" src="js/population.js"></script>
         <script type="text/javascript">
+             document.getElementById('toggleLabel').addEventListener('click', function() {
+        var buttonIds = [
+            'parametersEquality',
+            'parametersElite',
+            'parametersHierarchy',
+            'parametersDominance',
+            'parametersCrisis'
+        ];
+
+        buttonIds.forEach(function(id) {
+            var button = document.getElementById(id);
+            if (button.style.display === 'none') {
+                button.style.display = 'inline-block';
+            } else {
+                button.style.display = 'none';
+            }
+        });
+    });
             function changeNbGroups(newNbGroup) {
                 var open = false;
                 if(newNbGroup<=4 && newNbGroup>=0){
