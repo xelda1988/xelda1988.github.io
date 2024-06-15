@@ -1,0 +1,427 @@
+
+<html>
+    <head>
+        <title>Leviathan</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/seedrandom-3.0.5.min.js"></script>
+    </head>
+    <body>
+        <div class="modal fade" id="confirm-stop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog"><div class="modal-content">
+                    <div class="modal-header"><h4 class="modal-title" id="myModalLabel">Confirmation</h4></div>
+                    <div class="modal-body">Are you sure to stop this simulation?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="stop-confirmed" type="button" class="btn btn-danger danger">Stop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="btn-group">
+                <button type="button" id="play-btn" class="btn btn-default"><span class="glyphicon glyphicon-play"> Play</span></button>
+                <button type="button" id="pause-btn" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-pause"> Pause</span></button>
+                <button type="button" id="stop-btn" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#confirm-stop"><span class="glyphicon glyphicon-stop"> Stop</span></button>
+            </div>
+            <span id="currentIteration"></span>
+        </div>
+        <div class="container row">
+            <div id="leftcontainer" class="col-md-6">
+                <div id="config">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="nbGroupsInput"  class="col-sm-4">Number groups</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control" id="nbGroupsInput" onChange="changeNbGroups(this.value);" onkeydown="return false" value="1" step="1" min="1" max="4">
+                            </div>
+                        </div>
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default" id="group1">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                  Group 1
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="popSizeInput1"  class="col-sm-4">Pop size</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="popSizeInput1" value="40">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="omegaInput1"  class="col-sm-4">Omega</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="omegaInput1" value="0.3" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="kaInput1"  class="col-sm-4">Ka</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="kaInput1" value="10" min="0">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="rhoInput1"  class="col-sm-4">Rho</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="rhoInput1" value="0.8" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="deltaInput1"  class="col-sm-4">Delta</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="deltaInput1" value="0.2" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="sigmaInput1"  class="col-sm-4">Sigma</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="sigmaInput1" value="0.5" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default" id="group2">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                  Group 2
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="popSizeInput2"  class="col-sm-4">Pop size</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="popSizeInput2" value="30">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="omegaInput2"  class="col-sm-4">Omega</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="omegaInput2" value="0.3" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="kaInput2"  class="col-sm-4">Ka</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="kaInput2" value="10" min="0">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="rhoInput2"  class="col-sm-4">Rho</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="rhoInput2" value="0.8" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="deltaInput2"  class="col-sm-4">Delta</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="deltaInput2" value="0.2" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="sigmaInput2"  class="col-sm-4">Sigma</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="sigmaInput2" value="0.5" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default" id="group3">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                  Group 3
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="popSizeInput3"  class="col-sm-4">Pop size</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="popSizeInput3" value="10">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="omegaInput3"  class="col-sm-4">Omega</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="omegaInput3" value="0.3" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="kaInput3"  class="col-sm-4">Ka</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="kaInput3" value="10" min="0">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="rhoInput3"  class="col-sm-4">Rho</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="rhoInput3" value="0.8" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="deltaInput3"  class="col-sm-4">Delta</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="deltaInput3" value="0.2" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="sigmaInput3"  class="col-sm-4">Sigma</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="sigmaInput3" value="0.5" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default" id="group4">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                  Group 4
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="popSizeInput4"  class="col-sm-4">Pop size</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="popSizeInput4" value="10">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="omegaInput4"  class="col-sm-4">Omega</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="omegaInput4" value="0.3" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="kaInput"  class="col-sm-4">Ka</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="kaInput" value="10" min="0">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="rhoInput4"  class="col-sm-4">Rho</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="rhoInput4" value="0.8" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="deltaInput4"  class="col-sm-4">Delta</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="deltaInput4" value="0.2" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="sigmaInput4"  class="col-sm-4">Sigma</label>
+                                      <div class="col-sm-4">
+                                          <input type="number" class="form-control" id="sigmaInput4" value="0.5" step="0.1" min="0" max="1">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <label>Parameters presets:</label>
+                        <button id="parametersEquality" type="button" class="btn btn-default">Equality</button>
+                        <button id="parametersElite" type="button" class="btn btn-default">Elite</button>
+                        <button id="parametersHierarchy" type="button" class="btn btn-default">Hierarchy</button>
+                        <button id="parametersDominance" type="button" class="btn btn-default">Dominance</button>
+                        <button id="parametersCrisis" type="button" class="btn btn-default">Crisis</button>
+                    </form>
+                </div>
+                <div id="grid" style="display:none"></div>
+            </div>
+            <div id="rightcontainer" class="col-md-6">
+                <div id="presentation">
+                    <h1>Leviathan model</h1>
+                    <p>Leviathan is an opinion dynamics model described in <a href="http://jasss.soc.surrey.ac.uk/16/1/5.html">(Deffuant et al., 2013)</a>.</p>
+                    <p>Leviathan has been also studied for two groups of agents which differ in their parameters in <a href="https://journals.plos.org/plosone/article/authors?id=10.1371/journal.pone.0236840">(Huet et al., 2020)</a>.</p>
+                    <p>You can play with this demonstration application. Instructions:
+                    <ul>
+                        <li>Adjust the parameters and/or use one of the provided presets (buttons below the form)</li>
+                        <li>To play with groups, you should choose the number of groups and adjust the parameter of each group by clicking on each group</li>
+                        <li>Click on the run button to start the simulation and see the grid of the agents'opinions for others, and the grid of agents'reputation.</li>
+                        <li>The black column separates the matrix of agent's opinion for each other (a square represents the opinion of agent x for agent y) from the column describing agent's reputation. Value goes from dark red (very positive) to dark blue (very negative).</li>
+                        <li>If you click on the pause button, you will pause the simulation and see a graph of the individuals</li>
+                    </ul>
+                    <p>The code source of (Deffuant et al., 2013) is <a href="https://forgemia.inra.fr/lisc/leviathan">available</a> under the <a href="http://www.gnu.org/licenses/gpl.html">GNU Public License</a>.</p>
+                    <p>For the groups' version of (Huet et al., 2020), all relevant data and codes are also <a href="https://www.comses.net/codebases/879b611b-c3e2-44e1-bbc7-954578c566b8/releases/1.0.2/">available</a>.</p>
+                </div>            
+                <div id="graph" style="display:none"></div>
+                <span id="indivInfo"></span>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/grid.js"></script>
+        <script type="text/javascript" src="js/graph.js"></script>
+        <script type="text/javascript" src="js/population.js"></script>
+        <script type="text/javascript">
+            function changeNbGroups(newNbGroup) {
+                var open = false;
+                if(newNbGroup<=4 && newNbGroup>=0){
+                    for(var i=1;i<=4;i++){
+                        if(i<=newNbGroup){
+                            document.getElementById("group"+i).style.display = "block";
+                            open = open || document.getElementById("group"+i).collapsed;
+                        }else{
+                            document.getElementById("group"+i).style.display = "none";
+                        }
+                    }
+                    //if no group is open, open the first one
+                    if(!open ){
+                        $("#accordion a:first").trigger("click");
+                    }
+                }
+            }
+            $(document).ready(function(){
+                changeNbGroups(1);
+            });
+            $('.panel-heading a').on('click',function(e){
+                if($(this).parents('.panel').children('.panel-collapse').hasClass('in')){
+                    e.stopPropagation();
+                }
+            });
+            function setParametersInFormGroup1(popSize, omega, rho, ka, sigma, delta) {
+                $('#nbGroupsInput').val(1);
+                $('#popSizeInput1').val(popSize);
+                changeNbGroups(1);
+                $('#omegaInput1').val(omega);
+                $('#rhoInput1').val(rho);
+                $('#kaInput1').val(ka);
+                $('#sigmaInput1').val(sigma);
+                $('#deltaInput1').val(delta);
+            }
+            $('#parametersEquality').click(function(e) {
+                e.preventDefault();
+                setParametersInFormGroup1(40, 0.3, 0.01, 5, 0.35, 0.2);
+            })
+            $('#parametersElite').click(function(e) {
+                e.preventDefault();
+                setParametersInFormGroup1(60, 0.3, 0.1, 5, 0.3, 0.2);
+            })
+            $('#parametersHierarchy').click(function(e) {
+                e.preventDefault();
+                setParametersInFormGroup1(40, 0.2, 0.5, 10, 0.3, 0.2);
+            })
+            $('#parametersDominance').click(function(e) {
+                e.preventDefault();
+                setParametersInFormGroup1(40, 0.4, 0.8, 2, 0.3, 0.2);
+            })
+            $('#parametersCrisis').click(function(e) {
+                e.preventDefault();
+                setParametersInFormGroup1(40, 0.4, 0.35, 2, 0.5, 0.2);
+            })
+            // number of iterations launched per loop
+            // if too small, it takes too much time to schedule new loops
+            // if too big, a loop will be slower than the display loop
+            var stepsLoopSizeFactor = 10;
+            var refreshDelay = 80;
+            var stepsLoopSize = 0;
+            function refreshDisplay() {
+                if (loop) {
+                    $('#currentIteration').html(Math.round(iteration / (2 * pop.sizeP)) + " steps");
+                    grid.update();
+                }
+            }
+            function stepsLoop() {
+                for (var i = 0; i < stepsLoopSize; i++) {
+                    pop.step();
+                    iteration = iteration + 1;
+                }
+                if (loop) {
+                    setTimeout(stepsLoop, 0);
+                }
+            }
+            function refreshLoop() {
+                refreshDisplay();
+                if (loop) {
+                    setTimeout(refreshLoop, 100);
+                }
+            }
+            function setButtonsStates(play, pause, stop) {
+                playBtn.prop('disabled', !play);
+                pauseBtn.prop('disabled', !pause);
+                stopBtn.prop('disabled', !stop);
+
+            }
+            var iteration = 1;
+            var pop = null;
+            var loop = false;
+            var playBtn = $('#play-btn');
+            var pauseBtn = $('#pause-btn');
+            var stopBtn = $('#stop-btn');
+            var configContainer = $('#config');
+            var presentationContainer = $('#presentation');
+            var gridContainer = $('#grid');
+            var graphContainer = $('#graph');
+            playBtn.click(function() {
+                loop = true;
+                if (pop === null) {
+                    iteration = 1;
+                    var sizePops=[];
+                    var omegas=[];
+                    var kas=[];
+                    var rhos=[];
+                    var deltas=[];
+                    // probasIntergroupContact ignored in this version. Initialized to -1 (disabled)
+                    var probasIntergroupContact=[];
+                    var sigmas=[];
+                    var nbGroups=parseInt($('#nbGroupsInput').val());
+                    for(var g=1;g<=nbGroups;g++){
+                        sizePops.push(parseInt($('#popSizeInput'+g).val()));
+                        omegas.push(parseFloat($('#omegaInput'+g).val()));
+                        kas.push(parseInt($('#kaInput'+g).val()));
+                        rhos.push(parseFloat($('#rhoInput'+g).val()));
+                        deltas.push(parseFloat($('#deltaInput'+g).val()));
+                        probasIntergroupContact.push(-1);
+                        sigmas.push(parseFloat($('#sigmaInput'+g).val()));
+                    }
+                    pop  = new Population(sizePops,omegas,sigmas,probasIntergroupContact,kas,rhos,deltas,-5,null);
+                    stepsLoopSize = pop.sizeP * 2 * stepsLoopSizeFactor;
+                    grid = new Grid(500, 500, pop);
+                    configContainer.hide();
+                    gridContainer.show();
+                }
+                setButtonsStates(false, true, true);
+                setTimeout(stepsLoop, 0);
+                setTimeout(refreshLoop, 0);
+            });
+            pauseBtn.click(function() {
+                loop = false;
+                setButtonsStates(true, false, true);
+                // show Graph
+                graph = new Graph(500, 500, pop);
+                presentationContainer.hide();
+                graphContainer.show();
+            });
+            $('#stop-confirmed').click(function() {
+                loop = false;
+                pop = null;
+                $('#currentIteration').html("");
+                setButtonsStates(true, false, false);
+                gridContainer.hide();
+                graphContainer.hide();
+                presentationContainer.show();
+                configContainer.show();
+                $('#confirm-stop').modal('hide');
+            });
+
+        </script>
+    </body>
+</html>
