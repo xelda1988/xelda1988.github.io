@@ -35,8 +35,8 @@
                 <div id="config">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label for="nbGroupsInput"  class="col-sm-4">Number groups</label>
-                            <div class="col-sm-4">
+                            <label for="nbGroupsInput"  class="col-sm-4" style="visibility: hidden;">Number groups</label>
+                            <div class="col-sm-4" style="visibility: hidden;">
                                 <input type="number" class="form-control" id="nbGroupsInput" onChange="changeNbGroups(this.value);" onkeydown="return false" value="1" step="1" min="1" max="4">
                             </div>
                         </div>
@@ -45,44 +45,44 @@
                             <div class="panel-heading">
                               <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                  Group 1
+                                  Simulation Parameters
                                 </a>
                               </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in">
                               <div class="panel-body">
                                   <div class="form-group">
-                                      <label for="popSizeInput1"  class="col-sm-4">Pop size</label>
+                                      <label for="popSizeInput1"  class="col-sm-4">Population Size</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="popSizeInput1" value="40">
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label for="omegaInput1"  class="col-sm-4">Omega</label>
+                                      <label for="omegaInput1"  class="col-sm-4">OMEGA: VANITY/EITELKEIT</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="omegaInput1" value="0.3" step="0.1" min="0" max="1">
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label for="kaInput1"  class="col-sm-4">Ka</label>
+                                      <label for="kaInput1"  class="col-sm-4">Ka: Über wie viel andere wird geredet</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="kaInput1" value="10" min="0">
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label for="rhoInput1"  class="col-sm-4">Rho</label>
+                                      <label for="rhoInput1"  class="col-sm-4">RHO: OPINION PROPAGATION</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="rhoInput1" value="0.8" step="0.1" min="0" max="1">
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label for="deltaInput1"  class="col-sm-4">Delta</label>
+                                      <label for="deltaInput1"  class="col-sm-4">Delta: Wahrnehmungsfehler</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="deltaInput1" value="0.2" step="0.1" min="0" max="1">
                                       </div>
                                   </div>
                                   <div class="form-group">
-                                      <label for="sigmaInput1"  class="col-sm-4">Sigma</label>
+                                      <label for="sigmaInput1"  class="col-sm-4">Sigma: Sensitivität Differenz Fremdwert-Selbstwert</label>
                                       <div class="col-sm-4">
                                           <input type="number" class="form-control" id="sigmaInput1" value="0.5" step="0.1" min="0" max="1">
                                       </div>
@@ -238,7 +238,7 @@
                             </div>
                           </div>
                         </div>
-                        <label id="toggleLabel">Parameters presets:</label>                        
+                        <label id="toggleLabel">Parameters presets:</label><br>                       
                         <button id="parametersElite" type="button" class="btn btn-default">Gruppe 1</button>
                         <button id="parametersHierarchy" type="button" class="btn btn-default">Gruppe 2</button>
                         <button id="parametersDominance" type="button" class="btn btn-default">Gruppe 3</button>
@@ -249,21 +249,7 @@
                 <div id="grid" style="display:none"></div>
             </div>
             <div id="rightcontainer" class="col-md-6">
-                <div id="presentation">
-                    <h1>Leviathan model</h1>
-                    <p>Leviathan is an opinion dynamics model described in <a href="http://jasss.soc.surrey.ac.uk/16/1/5.html">(Deffuant et al., 2013)</a>.</p>
-                    <p>Leviathan has been also studied for two groups of agents which differ in their parameters in <a href="https://journals.plos.org/plosone/article/authors?id=10.1371/journal.pone.0236840">(Huet et al., 2020)</a>.</p>
-                    <p>You can play with this demonstration application. Instructions:
-                    <ul>
-                        <li>Adjust the parameters and/or use one of the provided presets (buttons below the form)</li>
-                        <li>To play with groups, you should choose the number of groups and adjust the parameter of each group by clicking on each group</li>
-                        <li>Click on the run button to start the simulation and see the grid of the agents'opinions for others, and the grid of agents'reputation.</li>
-                        <li>The black column separates the matrix of agent's opinion for each other (a square represents the opinion of agent x for agent y) from the column describing agent's reputation. Value goes from dark red (very positive) to dark blue (very negative).</li>
-                        <li>If you click on the pause button, you will pause the simulation and see a graph of the individuals</li>
-                    </ul>
-                    <p>The code source of (Deffuant et al., 2013) is <a href="https://forgemia.inra.fr/lisc/leviathan">available</a> under the <a href="http://www.gnu.org/licenses/gpl.html">GNU Public License</a>.</p>
-                    <p>For the groups' version of (Huet et al., 2020), all relevant data and codes are also <a href="https://www.comses.net/codebases/879b611b-c3e2-44e1-bbc7-954578c566b8/releases/1.0.2/">available</a>.</p>
-                </div>            
+                <div id="presentation"></div>            
                 <div id="graph" style="display:none"></div>
                 <span id="indivInfo"></span>
             </div>
